@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Seçimi - İleri Teknoloji</title>
+    <style>
+        /* KEYFRAMES: Droneların Yavaşça Dolaşması */
+        @keyframes drone-movement {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-50px, 30px) rotate(5deg); }
+            50% { transform: translate(50px, -50px) rotate(-5deg); }
+            75% { transform: translate(-30px, 40px) rotate(2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* GENEL SIFIRLAMA VE ARKA PLAN */
+        body {
+            /* Imleci drone.png dosyasıyla değiştir */
+            cursor: url('drone.png') 16 16, auto;
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #0d1117; /* Koyu, teknolojik arka plan */
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* DRONE GÖRSELİNİ TAKLİT EDEN CSS ELEMENTİ (Arka Plan) */
+        .drone-bg {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 224, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            box-shadow: 0 0 50px rgba(0, 224, 255, 0.5),
+                        inset 0 0 10px rgba(0, 224, 255, 0.8);
+            animation: drone-movement 15s ease-in-out infinite alternate;
+        }
+
+        /* Her bir drone'a özel konum ve animasyon hızı */
+        #drone1 { top: 10%; left: 10%; animation-duration: 18s; }
+        #drone2 { top: 80%; left: 20%; animation-duration: 14s; }
+        #drone3 { top: 50%; right: 15%; animation-duration: 20s; }
+        #drone4 { bottom: 5%; right: 5%; animation-duration: 16s; }
+        #drone5 { top: 25%; right: 45%; animation-duration: 19s; }
+
+
+        /* BAŞLIK VE İÇERİK STİLLERİ */
+        h1 {
+            color: #00e0ff;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+            z-index: 10;
+        }
+        .container {
+            display: flex;
+            gap: 60px;
+            z-index: 10;
+        }
+        .option {
+            padding: 40px 70px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid transparent;
+            backdrop-filter: blur(5px);
+            background-color: rgba(18, 24, 31, 0.7);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .option:hover {
+            /* Seçeneklerin üzerine gelindiğinde standart el imlecini kullan */
+            cursor: pointer;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.4);
+        }
+        .option h2 {
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .option p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Sivil Tasarım Stili */
+        .civil {
+            border-color: #00e0ff;
+        }
+        .civil h2 {
+            color: #00e0ff;
+            text-shadow: 0 0 5px rgba(0, 224, 255, 0.8);
+        }
+
+        /* Askeri Tasarım Stili */
+        .military {
+            border-color: #ff4500;
+        }
+        .military h2 {
+            color: #ff4500;
+            text-shadow: 0 0 5px rgba(255, 69, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="drone-bg" id="drone1"></div>
+    <div class="drone-bg" id="drone2"></div>
+    <div class="drone-bg" id="drone3"></div>
+    <div class="drone-bg" id="drone4"></div>
+    <div class="drone-bg" id="drone5"></div>
+    <h1>DRONE TEKNOLOJİLERİ - SİSTEM SEÇİMİ</h1>
+    <div class="container">
+
+        <a href="civil" class="option civil">
+            <h2>SİVİL TEKNOLOJİ</h2>
+            <p>Hafif, açık tonlar, keşif ve ticari uygulamalar.</p>
+        </a>
+
+        <a href="military" class="option military">
+            <h2>ASKERİ GÜÇ</h2>
+            <p>Koyu tonlar, operasyonel ve taktik görevler.</p>
+        </a>
+
+    </div>
+</body>
+</html>

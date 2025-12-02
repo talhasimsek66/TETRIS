@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sivil Uygulamalar - Modüler Teknoloji</title>
+    <style>
+        /* CSS: KOYU VE NEON TEKNOLOJİ TASARIMI */
+        :root {
+            --dark-bg: #111827; /* Koyu arka plan */
+            --neon-green: #34d399; /* Neon Sivil (Yeni yeşil/mavi) */
+            --neon-blue: #3b82f6; /* Hafif mavi vurgu */
+            --dark-card: #1f2937; /* Koyu kart arka planı */
+            --text-light: #e5e7eb; /* Açık metin rengi */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-light);
+            /* Arka plan derinliği için hafif radyal gradyan */
+            background-image: radial-gradient(circle at center, #1e293b 0%, var(--dark-bg) 70%);
+        }
+
+        .container {
+            background: transparent;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 1200px;
+            width: 95%;
+            text-align: center;
+        }
+
+        /* BAŞLIK VE GERİ DÖN LİNKİ */
+        .header {
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: var(--neon-green);
+            font-size: 3.5em;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            /* Neon parlama efekti */
+            text-shadow: 0 0 10px var(--neon-green), 0 0 20px rgba(52, 211, 153, 0.5);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #9ca3af;
+            font-size: 1.3em;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: var(--neon-blue);
+            font-weight: 600;
+            padding: 10px 20px;
+            background: var(--dark-card);
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: white;
+        }
+
+        /* UYGULAMA KARTLARI */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .app-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-light);
+            background: var(--dark-card);
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            /* Başlangıçta ince neon kenarlık */
+            border: 2px solid rgba(52, 211, 153, 0.2);
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            /* Hover'da güçlü neon parlama ve kenarlık */
+            box-shadow: 0 0 30px rgba(52, 211, 153, 0.5), 0 0 50px rgba(52, 211, 153, 0.2);
+            border: 2px solid var(--neon-green);
+            background: rgba(31, 41, 55, 0.8);
+        }
+
+        .app-card h2 {
+            font-size: 1.6em;
+            margin-top: 15px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .app-card p {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* Ikon stilleri */
+        .icon {
+            font-size: 50px;
+            color: var(--neon-blue); /* Mavi ikon rengi */
+            /* İkonlarda hafif parlama */
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        /* Hazır linkler için özel stil (Neon yeşil) */
+        .ready {
+            border-left: 5px solid var(--neon-green);
+        }
+
+        /* Hazır olmayan linkler için özel stil */
+        .not-ready {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-left: 5px solid rgba(255, 255, 255, 0.1);
+        }
+        .not-ready:hover {
+            transform: none;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            border: 2px solid rgba(52, 211, 153, 0.2);
+            background: var(--dark-card);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← ANA SİSTEM SEÇİMİ</a>
+
+        <div class="header">
+            <h1>MODÜLER SİVİL PLATFORM</h1>
+            <p class="subtitle">DRONE TEKNOLOJİLERİNİN KRİTİK SİVİL UYGULAMA ALANLARI</p>
+        </div>
+
+        <div class="app-grid">
+
+            <a href="cargo" class="app-card ready">
+                <span class="icon">📦</span>
+                <h2>Kargo & Teslimat</h2>
+                <p>Esnek yük kapasitesi, hızlı kurye çözümleri.</p>
+            </a>
+
+            <a href="health" class="app-card ready">
+                <span class="icon">⚕️</span>
+                <h2>Sağlık & Medikal</h2>
+                <p>Kan, aşı ve tıbbi ekipman acil transferi.</p>
+            </a>
+
+            <a href="disaster" class="app-card ready">
+                <span class="icon">🚨</span>
+                <h2>Afet Yönetimi</h2>
+                <p>Hasar tespiti, yaşam hattı ve kritik malzeme ulaştırma.</p>
+            </a>
+
+            <a href="#" class="app-card not-ready" onclick="showNotReady(event)">
+                <span class="icon">🌱</span>
+                <h2>Tarım & Ziraat</h2>
+                <p>Hassas ilaçlama, ekim ve mahsul takibi.</p>
+            </a>
+
+            <a href="#" class="app-card not-ready" onclick="showNotReady(event)">
+                <span class="icon">🚚</span>
+                <h2>Depo & İç Lojistik</h2>
+                <p>Büyük depolarda envanter sayımı ve parça transferi.</p>
+            </a>
+
+            <a href="#" class="app-card not-ready" onclick="showNotReady(event)">
+                <span class="icon">⚡</span>
+                <h2>Enerji & Altyapı</h2>
+                <p>Güneş paneli ve rüzgar türbini bakımı ve denetimi.</p>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        function showNotReady(event) {
+            event.preventDefault();
+            alert('Bu uygulama alanı henüz geliştirme aşamasındadır.');
+        }
+    </script>
+</body>
+</html>

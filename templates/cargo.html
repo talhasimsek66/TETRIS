@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sivil Özellikler - Modüler Kargo Drone</title>
+    <style>
+        /* CSS: AÇIK VE FERAH SİVİL TASARIM */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Açık renkli, ferahlatıcı sivil arka plan */
+            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 1200px;
+            width: 95%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        /* BAŞLIK VE GERİ DÖN LİNKİ */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1abc9c; /* Sivil/Çevre dostu yeşil tonu */
+            margin-bottom: 5px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            padding: 8px 15px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: #e0e6eb;
+        }
+
+        /* GÖRSEL ALAN VE KONTROLLER */
+        .canvas-container {
+            position: relative;
+            /* Açık renkli gökyüzü teması */
+            background: linear-gradient(180deg, #9fe6f7 0%, #e8f9ff 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            height: 550px; /* Biraz daha uzun yapıldı */
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #1abc9c; /* Yeşil/Mavi Sivil Buton */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #16a085;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
+        }
+
+        /* BİLGİ PANELLERİ VE LEJANT */
+        .info-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            color: #333;
+            text-align: center;
+            border-left: 5px solid #1abc9c;
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover {
+            transform: scale(1.02);
+        }
+
+        .info-card h3 {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .info-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            background: #ffffff;
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+
+        .legend {
+            /* Lejant stilini sivil renklere uydur */
+            margin-top: 20px;
+            padding: 10px 0;
+            border-top: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #7f8c8d;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <a href="civil" class="back-link">← Ana Sayfaya Geri Dön</a>
+
+    <div class="container">
+        <div class="header">
+            <h1>📦 Sivil Kargo ve Lojistik Çözümleri</h1>
+            <p class="subtitle">Modüler Drone Sistemi - Esnek Taşıma Kapasitesi Simülasyonu</p>
+        </div>
+
+        <div class="controls">
+            <button onclick="setMode(1)">1 Node (3 kg - Kişisel)</button>
+            <button onclick="setMode(2)">2 Node (8 kg - Orta Paket)</button>
+            <button onclick="setMode(4)">4 Node (18 kg - Büyük Kargo)</button>
+            <button onclick="setMode(6)">6 Node (30 kg - Endüstriyel)</button>
+            <button onclick="toggleAnimation()">▶️ Animasyonu Başlat/Durdur</button>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="droneCanvas"></canvas>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-card">
+                <h3>Aktif Node Sayısı</h3>
+                <div class="value" id="nodeCount">1</div>
+            </div>
+            <div class="info-card">
+                <h3>Taşıma Kapasitesi (Maks.)</h3>
+                <div class="value" id="capacity">3 kg</div>
+            </div>
+            <div class="info-card">
+                <h3>Uçuş Süresi (Ort.)</h3>
+                <div class="value" id="flightTime">25 dk</div>
+            </div>
+            <div class="info-card">
+                <h3>Kullanım Alanı</h3>
+                <div class="value" id="cost">Kurye/Hobi</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #34495e;"></div>
+                <span>Drone Node</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <span>Propeller (Pervane)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2ecc71;"></div>
+                <span>Kargo Kutusu</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3498db;"></div>
+                <span>Manyetik Bağlantı</span>
+            </div>
+        </div>
+
+        <div class="status" id="status">
+            Tek node modu: Küçük paket teslimatı için ideal. (Örn: İlaç, doküman)
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('droneCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Canvas boyutunu responsive yapar
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+
+        let currentMode = 1;
+        let animating = false;
+        let animationFrame = 0;
+        let propellerRotation = 0;
+
+        // Node modlarına göre güncel sivil veriler
+        const modes = {
+            1: { nodes: 1, capacity: "3 kg", time: "25 dk", cost: "Kurye/Hobi", desc: "Tek node modu: Küçük paket teslimatı için ideal. (Örn: İlaç, doküman)" },
+            2: { nodes: 2, capacity: "8 kg", time: "35 dk", cost: "Tarım/Haritalama", desc: "İki node modu: Orta boy paketler veya sensör taşıma. (Örn: Gıda, tohum)" },
+            4: { nodes: 4, capacity: "18 kg", time: "45 dk", cost: "İnşaat/Arama Kurtarma", desc: "Dörtlü node: Büyük paketler, ağır kamera ekipmanları. (Örn: Yedek parça)" },
+            6: { nodes: 6, capacity: "30 kg", time: "55 dk", cost: "Endüstriyel/Film", desc: "Altı node: Ağır yükler, uzun menzilli nakliye. (Örn: Jeneratör parçası)" }
+        };
+
+        function setMode(nodes) {
+            currentMode = nodes;
+            updateInfo();
+            draw();
+        }
+
+        function updateInfo() {
+            const mode = modes[currentMode];
+            document.getElementById('nodeCount').textContent = mode.nodes;
+            document.getElementById('capacity').textContent = mode.capacity;
+            document.getElementById('flightTime').textContent = mode.time;
+            document.getElementById('cost').textContent = mode.cost;
+            document.getElementById('status').textContent = mode.desc;
+        }
+
+        function toggleAnimation() {
+            animating = !animating;
+            if (animating) {
+                animate();
+            }
+        }
+
+        // Propeller (Pervane) çizimi
+        function drawPropeller(x, y, size, rotation) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+
+            for (let i = 0; i < 4; i++) {
+                ctx.save();
+                ctx.rotate((i * Math.PI) / 2);
+
+                // Pervane - Daha hafif sivil renk
+                ctx.fillStyle = '#e74c3c';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, size * 1.5, size * 0.3, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            // Merkez
+            ctx.fillStyle = '#c0392b';
+            ctx.beginPath();
+            ctx.arc(0, 0, size * 0.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Drone Node (Gövde) çizimi
+        function drawNode(x, y, size) {
+            // Ana gövde
+            ctx.fillStyle = '#34495e'; // Koyu gri gövde (Teknoloji vurgusu)
+            ctx.fillRect(x - size/2, y - size/2, size, size);
+
+            // Detaylar
+            ctx.fillStyle = '#ecf0f1'; // Açık detay
+            ctx.fillRect(x - size/2 + 5, y - size/2 + 5, size - 10, size - 10);
+
+            // LED göstergeleri (Sivil/GPS ışığı)
+            ctx.fillStyle = '#f1c40f';
+            ctx.beginPath();
+            ctx.arc(x - size/2 + 10, y - size/2 + 10, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#3498db';
+            ctx.beginPath();
+            ctx.arc(x + size/2 - 10, y - size/2 + 10, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Pervaneler
+            const propDist = size * 0.4;
+            const propSize = 8;
+
+            drawPropeller(x - propDist, y - propDist, propSize, propellerRotation);
+            drawPropeller(x + propDist, y - propDist, propSize, propellerRotation);
+            drawPropeller(x - propDist, y + propDist, propSize, propellerRotation);
+            drawPropeller(x + propDist, y + propDist, propSize, propellerRotation);
+        }
+
+        // Node Bağlantı (Manyetik) çizimi
+        function drawConnection(x1, y1, x2, y2) {
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Bağlantı noktası
+            ctx.fillStyle = '#2980b9';
+            ctx.beginPath();
+            ctx.arc((x1 + x2) / 2, (y1 + y2) / 2, 6, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Kargo Kutusu çizimi (Sivil/Teslimat temalı)
+        function drawCargo(x, y, width, height) {
+            // Kargo kutusu (Daha çevre dostu yeşil ton)
+            ctx.fillStyle = '#2ecc71';
+            ctx.fillRect(x - width/2, y - height/2, width, height);
+
+            // Bantlar
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x - width/2, y);
+            ctx.lineTo(x + width/2, y);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x, y - height/2);
+            ctx.lineTo(x, y + height/2);
+            ctx.stroke();
+
+            // Etiket
+            ctx.fillStyle = 'white';
+            ctx.fillRect(x - 18, y - 10, 36, 20);
+            ctx.fillStyle = '#16a085';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('TESLİM', x - 18, y + 3);
+        }
+
+        // Bulut çizimi (Daha gerçekçi bulutlar)
+        function drawCloud(x, y, scale) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.shadowColor = 'rgba(0,0,0,0.1)';
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(x, y, 20 * scale, 0, Math.PI * 2);
+            ctx.arc(x + 25 * scale, y, 25 * scale, 0, Math.PI * 2);
+            ctx.arc(x + 50 * scale, y, 20 * scale, 0, Math.PI * 2);
+            ctx.arc(x + 15 * scale, y + 10 * scale, 18 * scale, 0, Math.PI * 2);
+            ctx.arc(x + 40 * scale, y + 5 * scale, 22 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0; // Gölgeyi sıfırla
+        }
+
+        // Şehir/Bina çizimi (Sivil lojistik ortamı)
+        function drawBuilding(x, y, width, height) {
+            ctx.fillStyle = '#bdc3c7'; // Açık gri beton
+            ctx.fillRect(x, y, width, height);
+
+            // Pencereler (Mavi yanıp sönen ışıklar, sivil ofis)
+            ctx.fillStyle = '#3498db';
+            for (let i = 0; i < Math.floor(width / 25); i++) {
+                for (let j = 0; j < Math.floor(height / 35); j++) {
+                    // Hafif yanıp sönme animasyonu
+                    if ((i + j + Math.floor(animationFrame/20)) % 5 === 0) {
+                        ctx.fillStyle = '#f1c40f'; // Sarı ışık
+                    } else {
+                        ctx.fillStyle = '#3498db'; // Mavi ışık
+                    }
+                    ctx.fillRect(x + 10 + i * 25, y + 10 + j * 35, 12, 25);
+                }
+            }
+        }
+
+        function draw() {
+            // Canvas boyutunu yeniden ayarla
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            // Temizle ve Gökyüzü gradyanı
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#9fe6f7');
+            gradient.addColorStop(1, '#e8f9ff');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Bulutlar (Hafifçe kaydır)
+            const cloudXOffset = (animationFrame * 0.5) % (canvas.width + 100);
+
+            drawCloud(canvas.width - cloudXOffset, 80, 1.2);
+            drawCloud(canvas.width - cloudXOffset + 200, 150, 0.9);
+            drawCloud(canvas.width - cloudXOffset - 400, 100, 1.1);
+
+            // Şehir silueti (zemin)
+            const groundY = canvas.height - 150;
+            ctx.fillStyle = '#b3b6b7';
+            ctx.fillRect(0, groundY, canvas.width, 150);
+
+            drawBuilding(50, groundY - 150, 80, 150);
+            drawBuilding(canvas.width - 250, groundY - 200, 100, 200);
+            drawBuilding(canvas.width - 100, groundY - 100, 70, 100);
+
+            const centerX = canvas.width / 2;
+            const centerY = 200 + Math.sin(animationFrame * 0.05) * 10;
+            const nodeSize = 50;
+            const spacing = 60;
+
+            // DRONE KONFİGÜRASYONU (Mantık önceki koddan korundu)
+            if (currentMode === 1) {
+                drawNode(centerX, centerY, nodeSize);
+                drawCargo(centerX, centerY + nodeSize/2 + 30, 40, 30);
+            } else if (currentMode === 2) {
+                const offset = spacing / 2;
+                drawNode(centerX - offset, centerY, nodeSize);
+                drawNode(centerX + offset, centerY, nodeSize);
+                drawConnection(centerX - offset, centerY, centerX + offset, centerY);
+                drawCargo(centerX, centerY + nodeSize/2 + 30, 60, 40);
+            } else if (currentMode === 4) {
+                drawNode(centerX - spacing/2, centerY - spacing/2, nodeSize);
+                drawNode(centerX + spacing/2, centerY - spacing/2, nodeSize);
+                drawNode(centerX - spacing/2, centerY + spacing/2, nodeSize);
+                drawNode(centerX + spacing/2, centerY + spacing/2, nodeSize);
+
+                drawConnection(centerX - spacing/2, centerY - spacing/2, centerX + spacing/2, centerY - spacing/2);
+                drawConnection(centerX - spacing/2, centerY + spacing/2, centerX + spacing/2, centerY + spacing/2);
+                drawConnection(centerX - spacing/2, centerY - spacing/2, centerX - spacing/2, centerY + spacing/2);
+                drawConnection(centerX + spacing/2, centerY - spacing/2, centerX + spacing/2, centerY + spacing/2);
+
+                drawCargo(centerX, centerY + spacing/2 + nodeSize/2 + 35, 80, 50);
+            } else if (currentMode === 6) {
+                const radius = spacing * 0.8;
+                const positions = [];
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * Math.PI * 2) / 6 - Math.PI / 2;
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = centerY + Math.sin(angle) * radius;
+                    positions.push({x, y});
+                    drawNode(x, y, nodeSize);
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    const next = (i + 1) % 6;
+                    drawConnection(positions[i].x, positions[i].y, positions[next].x, positions[next].y);
+                }
+
+                drawCargo(centerX, centerY + radius + nodeSize/2 + 40, 100, 60);
+            }
+
+            // Bilgi metni
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText(`${currentMode} Node Konfigürasyonu`, 20, 30);
+            ctx.font = '14px Arial';
+            ctx.fillText(`Kapasite: ${modes[currentMode].capacity}`, 20, 55);
+        }
+
+        function animate() {
+            if (!animating) return;
+
+            animationFrame++;
+            propellerRotation += 0.3; // Pervanelerin dönme hızı
+
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        // İlk çizim ve responsive ayarlar
+        updateInfo();
+        draw();
+
+        window.addEventListener('resize', () => {
+            draw();
+        });
+
+        // Sayfa yüklendiğinde animasyonu otomatik başlat
+        window.onload = function() {
+            toggleAnimation();
+        };
+
+    </script>
+</body>
+</html>
